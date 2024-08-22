@@ -1,1 +1,0 @@
-{"version":3,"file":"VNode.type.d.ts","sourceRoot":"","sources":["../../src/types/VNode.type.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,KAAK,GAAG;IAClB,GAAG,EAAE,MAAM,CAAC;IACZ,KAAK,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;IAC9B,QAAQ,EAAE,KAAK,CAAC,MAAM,GAAG,KAAK,CAAC,CAAC;CACjC,CAAC"}
