@@ -1,18 +1,17 @@
 import {VNode} from './types/index.js';
 
-export function patch(newNode: VNode, oldNode: VNode) {
-  if (newNode.tag !== oldNode.tag) {
-    // do something
+export function patch(newNode: VNode, originalNode: VNode) {
+  if (newNode.tag !== originalNode.tag) {
+    originalNode.tag = newNode.tag;
   }
 
-  for (const key in newNode.attrs) {
-    // attrs could be update instead of delete or add
-    if (oldNode.attrs[key] === undefined) {
-      // add attributes
-    } else if (newNode.attrs[key] !== oldNode.attrs[key]) {
-      // update attributes
-    } else {
-      // delete attributes
+  for (const key in originalNode.attrs) {
+    if (newNode.attrs[key] === undefined) {
+      delete originalNode.attrs[key];
+    } else if (originalNode.attrs[key] !== newNode.attrs[key]) {
+      originalNode.attrs[key] = newNode.attrs[key];
     }
   }
+
+  return originalNode;
 }
