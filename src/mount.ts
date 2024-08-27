@@ -12,9 +12,8 @@ export function mount(vnode: VNode, dom: HTMLElement | ParentNode) {
     if (typeof child === 'string') {
       $el.textContent = child;
     } else {
-      $el.appendChild(mount(child, vnode.el));
+      mount(child, vnode.el);
     }
   }
   dom.appendChild($el);
-  return $el;
 }

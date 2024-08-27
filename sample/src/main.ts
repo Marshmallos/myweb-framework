@@ -1,4 +1,4 @@
-import {mount, patch} from '../../dist/index';
+import {mount} from '../../dist/index';
 const root = document.getElementById('root');
 
 const vNode = {
@@ -14,8 +14,11 @@ const vNode2 = {
   attrs: {id: '3'},
   children: ['Hello', {tag: 'p', attrs: {id: '4'}, children: ['Hello World']}],
 };
-const oldNode = mount(vNode);
-root?.appendChild(oldNode);
-setTimeout(() => {
-  root?.replaceChild(mount(patch(vNode2, vNode)), oldNode);
-}, 1000);
+
+if (root !== null) {
+  mount(vNode, root);
+
+  setTimeout(() => {
+    mount(vNode2, root);
+  }, 5000);
+}
