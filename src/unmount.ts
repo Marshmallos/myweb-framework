@@ -1,7 +1,7 @@
 import {VNode} from './types/VNode.type';
 
 /**
- * Removes the element from the domsdhlgk'  sahgkls
+ * Removes the HTMLElement from the DOM
  */
 
 export function unmount(vnode: VNode) {
