@@ -9,6 +9,7 @@ const vNode = {
     {tag: 'p', attrs: {id: '2', class: 'myElem'}, children: ['Hello World']},
   ],
 };
+
 const vNode2 = {
   tag: 'div',
   attrs: {id: '3'},

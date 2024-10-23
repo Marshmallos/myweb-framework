@@ -35,7 +35,6 @@ export function patch(originalVNode: VNode, newVNode: VNode) {
   const originalVNodeParent = originalVNode.el.parentNode;
   newVNode.el = originalVNode.el;
 
-  console.log(originalVNode.el.parentNode);
   if (originalVNodeParent === null) {
     throw new Error('No parent node found');
   }
@@ -51,22 +50,28 @@ export function patch(originalVNode: VNode, newVNode: VNode) {
     patchAttributes(originalVNode, newVNode);
   }
 
+  const oldChildren = originalVNode.children;
+  const newChildren = newVNode.children;
   /**
    * For each children in vdom, patch if its node else replace text content
    * Overwriting text content will erase all childrens
    */
   if (originalVNode.children !== newVNode.children) {
-    originalVNode.children.forEach((child, index) => {
-      const newChild = newVNode.children[index];
-      if (
-        typeof child !== 'string' &&
-        typeof newChild !== 'string' &&
-        newChild !== undefined
-      ) {
-        patch(child, newChild);
+    const lgth = Math.ceil(
+      (originalVNode.children.length + newVNode.children.length) / 2,
+    );
+    for (let i = 0; i < lgth; i++) {
+      const child = originalVNode.children[i];
+      const newChild = newVNode.children[i];
+      if (child === undefined || newChild === undefined) return;
+      if (typeof child === 'string' || typeof newChild === 'string') {
+        if (typeof newChild === 'string' && child !== newChild) {
+          newVNode.el.textContent = newChild;
+        }
       } else {
-        // newVNode.el.textContent = newChild;
+        mount(child, originalVNode.el);
+        patch(child, newChild);
       }
-    });
+    }
   }
 }
