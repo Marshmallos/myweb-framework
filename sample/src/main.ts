@@ -1,26 +1,17 @@
-import {mount, patch} from '../../dist/index';
-const root = document.getElementById('root');
+import {mount} from '../../dist';
+import App from './App';
 
-const vNode = {
-  tag: 'div',
-  attrs: {id: '1', class: 'myDiv'},
-  children: [
-    'Hello World',
-    {tag: 'p', attrs: {id: '2', class: 'myElem'}, children: ['Hello World']},
-  ],
-};
+// App is mounted on to root in this file
+// How to patch node if changes are made?
+// Track node globally?
 
-const vNode2 = {
-  tag: 'div',
-  attrs: {id: '3'},
-  children: ['Hello', {tag: 'p', attrs: {id: '4'}, children: ['World']}],
-};
-
-if (root !== null) {
-  mount(vNode, root);
-
-  setTimeout(() => {
-    console.log('activated');
-    patch(vNode, vNode2);
-  }, 5000);
+export default function main() {
+  const root = document.getElementById('root');
+  if (root === null) {
+    return;
+  }
+  // Execute mount on first startup and patch every subsequent loads?
+  return mount(App(), root);
 }
+
+main();
