@@ -50,8 +50,6 @@ export function patch(originalVNode: VNode, newVNode: VNode) {
     patchAttributes(originalVNode, newVNode);
   }
 
-  const oldChildren = originalVNode.children;
-  const newChildren = newVNode.children;
   /**
    * For each children in vdom, patch if its node else replace text content
    * Overwriting text content will erase all childrens
