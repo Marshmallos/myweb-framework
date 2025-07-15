@@ -2,17 +2,23 @@ import {mount} from './mount.js';
 import {VNode} from './types/index.js';
 import {unmount} from './unmount.js';
 
+// Questions
+// Why is it necessary to assign originalVNode HTMLElement to newVNode?
+// - if originalVNode is unmounted all records are lost
+// - this only happens if tags are different and it they are it should drop everything
+// Why does VNode lose its html element when its not assigned from old to new vnode?
+
 function patchAttributes(originalVNode: VNode, newVNode: VNode) {
   /**
-   * Look thourgh original vnode attributes and remove not existing attributes
+   * Look through original vnode attributes and remove not existing attributes
    * in new vnode. Replaces any existing attributes of original vnode with new
    * vnode attributes
    */
   for (const [key, value] of Object.entries(originalVNode.attrs)) {
     if (newVNode.attrs[key] === undefined) {
-      newVNode.el?.removeAttribute(key);
+      originalVNode.el?.removeAttribute(key);
     } else if (newVNode.attrs[key] !== value) {
-      newVNode.el?.setAttribute(key, newVNode.attrs[key]);
+      originalVNode.el?.setAttribute(key, newVNode.attrs[key]);
     }
   }
 
@@ -20,8 +26,8 @@ function patchAttributes(originalVNode: VNode, newVNode: VNode) {
    * Add additional attributes found in new vnode
    */
   for (const [key, value] of Object.entries(newVNode.attrs)) {
-    if (originalVNode.attrs[key] == undefined) {
-      newVNode.el?.setAttribute(key, value);
+    if (originalVNode.attrs[key] === undefined) {
+      originalVNode.el?.setAttribute(key, value);
     }
   }
 }
@@ -64,10 +70,9 @@ export function patch(originalVNode: VNode, newVNode: VNode) {
       if (child === undefined || newChild === undefined) return;
       if (typeof child === 'string' || typeof newChild === 'string') {
         if (typeof newChild === 'string' && child !== newChild) {
-          newVNode.el.textContent = newChild;
+          originalVNode.el.textContent = newChild;
         }
       } else {
-        mount(child, originalVNode.el);
         patch(child, newChild);
       }
     }
